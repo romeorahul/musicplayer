@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './center.module.css';
 import SearchForm from '../searchform/Searchform';
 
+
 function Center() {
   return (
     <div className={styles.container}>

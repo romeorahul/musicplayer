@@ -1,12 +1,8 @@
-// apolloClient.js
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
-const httpLink = createHttpLink({
-  uri: 'https://song-tc.pixelotech.com/graphql', // Your GraphQL endpoint URL
-});
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  link: httpLink,
+  uri: 'https://song-tc.pixelotech.com/graphql',
   cache: new InMemoryCache(),
 });
 

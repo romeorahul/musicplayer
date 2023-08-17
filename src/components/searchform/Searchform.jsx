@@ -1,47 +1,27 @@
-// components/SearchForm.js
-"use client"
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useLazyQuery } from '@apollo/client';
-import { GET_SONGS } from "@/utils/query";
-import client from "@/utils/apolloClient";
-import styles from './search.module.css';
-import { IoMdSearch } from 'react-icons/io'
+"use client";
+import React, { useState } from "react"; // Import useState
+import { useRouter } from "next/navigation"; // Correctly import next/router
+import styles from "./search.module.css";
+import { IoMdSearch } from "react-icons/io";
 
 function SearchForm() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
 
-  const [getSongs, { data }] = useLazyQuery(GET_SONGS, { client });
-  console.log({data});
-
-//   useEffect(() => {
-//     if (query.length > 0) {
-//       // Fetch search results when the query changes
-//       getSongs({ variables: { search: query, songType: 'FOR_YOU' } });
-//     } else {
-//       setSearchResults([]);
-//     }
-//   }, [query, getSongs]);
-
-//   useEffect(() => {
-//     if (data) {
-//       setSearchResults(data.getSongs);
-//     }
-//   }, [data]);
-
-  useEffect(() => {
-    if (data && data.getSongs) {
-      setSearchResults(data.getSongs);
-      
-      // Log the fetched data to the console
-      console.log('Fetched data:', data.getSongs);
-    }
-  }, [data]);
-
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(query)}`
+      );
+      const data = await response.json();
+      setSearchResults(data); // Assuming the API returns an array of results
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+
     router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
@@ -53,11 +33,13 @@ function SearchForm() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit"><IoMdSearch className={styles.searchIcon} /></button>
+      <button type="submit">
+        <IoMdSearch className={styles.searchIcon} />
+      </button>
 
       {searchResults.length > 0 && (
         <ul>
-          {searchResults.map(result => (
+          {searchResults.map((result) => (
             <li key={result.id}>{result.title}</li>
           ))}
         </ul>
