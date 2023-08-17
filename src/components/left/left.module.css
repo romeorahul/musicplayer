@@ -5,13 +5,22 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
 }
 
 .container ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     list-style: none;
     margin-left: 20px;
+}
+
+.container ul li {
+    color: rgb(159, 149, 149);
+}
+
+.container ul li:hover {
+    color: white;
+    cursor: pointer;
 }

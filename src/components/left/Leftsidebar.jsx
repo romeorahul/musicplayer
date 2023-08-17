@@ -8,10 +8,10 @@ function Leftsidebar() {
     <div className={styles.container}>
       <Image src={spotify} width={200}/>
       <ul>
-        <li>Home</li>
-        <li>Home</li>
-        <li>Home</li>
-        <li>Home</li>
+        <li>For You</li>
+        <li>Top Tracks</li>
+        <li>Favourites</li>
+        <li>Recently Played</li>
       </ul>
     </div>
   )

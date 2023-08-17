@@ -6,6 +6,7 @@ import { useLazyQuery } from '@apollo/client';
 import { GET_SONGS } from "@/utils/query";
 import client from "@/utils/apolloClient";
 import styles from './search.module.css';
+import { IoMdSearch } from 'react-icons/io'
 
 function SearchForm() {
   const [query, setQuery] = useState('');
@@ -48,11 +49,11 @@ function SearchForm() {
     <form onSubmit={handleSearch} className={styles.formContainer}>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search Songs / Artists"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button type="submit">Search</button>
+      <button type="submit"><IoMdSearch className={styles.searchIcon} /></button>
 
       {searchResults.length > 0 && (
         <ul>

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 5px;
     background-color: rgb(45, 41, 41);
     color: white;
     gap: 30px;
@@ -16,9 +16,25 @@
     border: none;
     padding: 5px 20px;
     width: 100%;
+    font-size: 18px;
+}
+
+.formContainer input:focus {
+    outline: none;
 }
 
 .formContainer input::placeholder {
-    color: white;
+    color: rgb(154, 143, 143);
     font-size: 15px;
+}
+
+.formContainer button {
+    background-color: transparent;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+.searchIcon {
+    font-size: 20px;
 }
