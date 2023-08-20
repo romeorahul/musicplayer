@@ -1,3 +1,4 @@
+// "use client"
 import React from "react";
 import styles from "./page.module.css";
 import Leftsidebar from "@/components/left/leftsidebar";
@@ -11,7 +12,8 @@ function page() {
         <Leftsidebar />
       </div>
       <div className={styles.middle}>
-        <Center />
+      <Center />
+
       </div>
       <div className={styles.right}>
         <Rightsidebar />
