@@ -2,7 +2,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://song-tc.pixelotech.com/graphql", // Replace with your GraphQL server URL
+  uri: "https://song-tc.pixelotech.com/graphql",
   cache: new InMemoryCache(),
 });
 

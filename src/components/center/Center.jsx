@@ -5,7 +5,6 @@ import SearchForm from "../searchform/Searchform";
 import GetSongs from "../GetSongs";
 
 function Center({ selectedItem }) {
-
   // this console is properly showing the value which is passed from leftsidebar
   console.log(`Center Component - Selected Item: ${selectedItem}`);
   return (

@@ -5,9 +5,10 @@ import Image from "next/image";
 import spotify from "public/spotifylogo.png";
 import GetSongs from "../GetSongs";
 import Center from "../center/Center";
+import Rightsidebar from "../right/Rightsidebar";
 
 const songTypeMapping = {
-  Favourites: "FAVOURITES",
+  "Favourites": "FAVOURITES",
   "For You": "FOR_YOU",
   "Top Tracks": "TOP_TRACKS",
   "Recently Played": "RECENTLY_PLAYED",
@@ -21,6 +22,7 @@ function Leftsidebar() {
 
     // here iam setting the value for passing in center component below
     setSelectedItem(mappedValue);
+    console.log("Parent Component - selectedItem:", selectedItem);
   };
 
   return (
@@ -35,6 +37,7 @@ function Leftsidebar() {
 
       {/* here iam passing the prop to the center component */}
       <Center selectedItem={selectedItem} />
+      <Rightsidebar selectedItem={selectedItem} />
     </div>
   );
 }

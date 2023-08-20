@@ -35,7 +35,6 @@ const GetSongs = ({ selectedItem }) => {
             <h2>{song.title}</h2>
             <p>Artist: {song.artist}</p>
             <p>Duration: {song.duration}</p>
-            {/* You can display other song information here */}
           </li>
         ))}
       </ul>
