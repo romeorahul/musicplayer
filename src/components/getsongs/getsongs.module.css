@@ -1,0 +1,31 @@
+.mainbox {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(30, 28, 28);
+    /* flex-direction: column; */
+    margin: 20px 0px;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.mainbox:hover {
+    background-color: rgb(65, 61, 61);
+}
+
+.leftside {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.albuminfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}

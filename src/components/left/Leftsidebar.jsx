@@ -1,11 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./left.module.css";
 import Image from "next/image";
 import spotify from "public/spotifylogo.png";
-import GetSongs from "../GetSongs";
-import Center from "../center/Center";
-import Rightsidebar from "../right/Rightsidebar";
+import { useMyContext } from "../context/MyContext";
 
 const songTypeMapping = {
   "Favourites": "FAVOURITES",
@@ -15,14 +13,13 @@ const songTypeMapping = {
 };
 
 function Leftsidebar() {
-  const [selectedItem, setSelectedItem] = useState("");
+  const { updateSelectedItem } = useMyContext(); // Access the context
 
   const handleListItemClick = (text) => {
     const mappedValue = songTypeMapping[text];
 
-    // here iam setting the value for passing in center component below
-    setSelectedItem(mappedValue);
-    console.log("Parent Component - selectedItem:", selectedItem);
+    // Update the selectedItem state using the context function
+    updateSelectedItem(mappedValue);
   };
 
   return (
@@ -34,10 +31,6 @@ function Leftsidebar() {
         <ListItem text="Top Tracks" onItemClick={handleListItemClick} />
         <ListItem text="Recently Played" onItemClick={handleListItemClick} />
       </ul>
-
-      {/* here iam passing the prop to the center component */}
-      <Center selectedItem={selectedItem} />
-      <Rightsidebar selectedItem={selectedItem} />
     </div>
   );
 }

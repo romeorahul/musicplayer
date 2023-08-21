@@ -13,8 +13,11 @@ import {
   FaVolumeUp,
 } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { useMyContext } from "../context/MyContext";
 
-function Rightsidebar({ selectedItem }) {
+function Rightsidebar() {
+  const { selectedItem } = useMyContext();
+  // console.log("iam from the center" + selectedItem);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(50); // Initial volume
   const [currentSongId, setCurrentSongId] = useState(1); // Initial song ID
@@ -45,21 +48,17 @@ function Rightsidebar({ selectedItem }) {
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
-    // Implement logic to play or pause the audio
   };
 
   const handleVolumeChange = (event) => {
     setVolume(event.target.value);
-    // Implement logic to adjust the volume
   };
 
   const playNextSong = () => {
-    // Increment the current song ID to play the next song
     setCurrentSongId(currentSongId + 1);
   };
 
   const playPreviousSong = () => {
-    // Decrement the current song ID to play the previous song
     if (currentSongId > 1) {
       setCurrentSongId(currentSongId - 1);
     }

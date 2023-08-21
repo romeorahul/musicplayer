@@ -1,5 +1,5 @@
 .container {
-  height: 100vh;
+  height: 1400px;
   background: linear-gradient(to bottom, #000000, #151537);
  display: flex;
  justify-content: space-between;
