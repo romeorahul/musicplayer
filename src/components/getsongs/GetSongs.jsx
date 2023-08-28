@@ -36,11 +36,18 @@ const GetSongs = () => {
         <div key={song.id} className={styles.mainbox}>
           <div className={styles.leftside}>
             <div className={styles.imgbox}>
-              <Image
+              {/* <Image
                 src={song.photoUrl}
                 width={50}
                 height={50}
                 alt="songphoto"
+              /> */}
+
+              <img
+                src={`https://song-tc.pixelotech.com${song.photoUrl}`}
+                alt="photo"
+                width={50}
+                height={50}
               />
             </div>
 

@@ -1,8 +1,7 @@
-"use client"
-import React, { useState, useEffect } from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import { gql, useQuery } from "@apollo/client";
 import styles from "./right.module.css";
-import album from "public/album.jpg";
 import Image from "next/image";
 import {
   FaPlay,
@@ -21,6 +20,7 @@ function Rightsidebar() {
   const [songList, setSongList] = useState([]); // State to hold song list
   const [currentSongIndex, setCurrentSongIndex] = useState(0); // Initial song index
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
+  const audioRef = useRef(null);
 
   const query = gql`
     query GetSongsByType($songType: SongType!) {
@@ -50,26 +50,49 @@ function Rightsidebar() {
     setCurrentSongIndex(0);
   }, [songList, selectedItem]);
 
+  const changeSong = (newIndex) => {
+    // Pause the current song
+    audioRef.current.pause();
+
+    // Set the new current song index
+    setCurrentSongIndex(newIndex);
+
+    // Play the new song if it was paused
+    if (isPlaying) {
+      audioRef.current.play();
+    }
+  };
+
+  const playNextSong = () => {
+    // Calculate the index of the next song
+    const nextIndex = (currentSongIndex + 1) % songList.length;
+
+    // Change to the next song
+    changeSong(nextIndex);
+  };
+
+  const playPreviousSong = () => {
+    // Calculate the index of the previous song
+    const prevIndex =
+      currentSongIndex === 0 ? songList.length - 1 : currentSongIndex - 1;
+
+    // Change to the previous song
+    changeSong(prevIndex);
+  };
+
   const togglePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
   const handleVolumeChange = (event) => {
-    setVolume(event.target.value);
-  };
-
-  const playNextSong = () => {
-    // Increment the current song index, and loop back to the start if necessary
-    setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songList.length);
-    setIsPlaying(true);
-  };
-
-  const playPreviousSong = () => {
-    // Decrement the current song index, and loop back to the end if necessary
-    setCurrentSongIndex((prevIndex) =>
-      prevIndex === 0 ? songList.length - 1 : prevIndex - 1
-    );
-    setIsPlaying(true);
+    const newVolume = event.target.value;
+    setVolume(newVolume);
+    audioRef.current.volume = newVolume / 100;
   };
 
   const toggleVolumeVisibility = () => {
@@ -82,12 +105,20 @@ function Rightsidebar() {
         <>
           <h1>{songList[currentSongIndex].title}</h1>
           <p>{songList[currentSongIndex].artist}</p>
-          <Image
-            src={album}
+
+          <img
+            src={`https://song-tc.pixelotech.com${songList[currentSongIndex].photoUrl}`}
+            alt="photo"
             width={400}
             height={400}
-            alt="album image"
           />
+
+          {/* Audio element */}
+          <audio
+            ref={audioRef}
+            src={`https://song-tc.pixelotech.com${songList[currentSongIndex].audioUrl}`}
+            onEnded={playNextSong} // Automatically play next song when the current one ends
+          ></audio>
         </>
       )}
       <div className={styles.controlContainer}>

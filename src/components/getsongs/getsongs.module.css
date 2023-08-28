@@ -29,3 +29,7 @@
     align-items: flex-start;
     gap: 5px;
 }
+
+.imgbox {
+    border-radius: 50px;
+}
