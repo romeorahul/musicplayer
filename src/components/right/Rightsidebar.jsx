@@ -16,11 +16,11 @@ import { useMyContext } from "../context/MyContext";
 function Rightsidebar() {
   const { selectedItem } = useMyContext();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(50); // Initial volume
-  const [songList, setSongList] = useState([]); // State to hold song list
-  const [currentSongIndex, setCurrentSongIndex] = useState(0); // Initial song index
+  const [volume, setVolume] = useState(50);
+  const [songList, setSongList] = useState([]);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Loading indicator state
+  const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef(null);
 
   const query = gql`
@@ -43,44 +43,55 @@ function Rightsidebar() {
   useEffect(() => {
     if (!loading && !error) {
       setSongList(data.getSongs);
+      setIsPlaying(false);
     }
   }, [data, loading, error, selectedItem]);
 
+  useEffect(() => {
+    if (currentSongIndex < 0) {
+      setCurrentSongIndex(0);
+    } else if (currentSongIndex >= songList.length) {
+      setCurrentSongIndex(songList.length - 1);
+    }
+  }, [currentSongIndex, songList]);
+
+  useEffect(() => {
+    if (songList.length > 0) {
+      const newSong = songList[currentSongIndex];
+      audioRef.current.src = `https://song-tc.pixelotech.com${newSong.audioUrl}`;
+      setIsLoading(true);
+
+      audioRef.current.addEventListener("canplaythrough", () => {
+        audioRef.current.play();
+        setIsLoading(false);
+        setIsPlaying(true); // Update isPlaying state when the song starts playing
+      });
+    }
+  }, [songList, currentSongIndex]);
+
   const changeSong = (newIndex) => {
-    // Pause the current song
-    audioRef.current.pause();
-
-    // Set the new current song index
     setCurrentSongIndex(newIndex);
+    setIsLoading(true); // Set loading state when changing songs
 
-    // Load the new song
     const newSong = songList[newIndex];
     audioRef.current.src = `https://song-tc.pixelotech.com${newSong.audioUrl}`;
 
-    // Show loading indicator
-    setIsLoading(true);
-
-    // Listen for canplaythrough event before playing
+    // Add an event listener to play the song when it can play through
     audioRef.current.addEventListener("canplaythrough", () => {
       audioRef.current.play();
-      setIsLoading(false); // Hide loading indicator
+      setIsLoading(false); // Turn off loading state once the song starts playing
+      setIsPlaying(true); // Update isPlaying state when the song starts playing
     });
   };
 
   const playNextSong = () => {
-    // Calculate the index of the next song
     const nextIndex = (currentSongIndex + 1) % songList.length;
-
-    // Change to the next song
     changeSong(nextIndex);
   };
 
   const playPreviousSong = () => {
-    // Calculate the index of the previous song
     const prevIndex =
       currentSongIndex === 0 ? songList.length - 1 : currentSongIndex - 1;
-
-    // Change to the previous song
     changeSong(prevIndex);
   };
 
@@ -117,12 +128,11 @@ function Rightsidebar() {
             height={400}
           />
 
-          {/* Audio element */}
           <audio
             ref={audioRef}
             src={`https://song-tc.pixelotech.com${songList[currentSongIndex].audioUrl}`}
-            onEnded={playNextSong} // Automatically play next song when the current one ends
-          ></audio>
+            onEnded={playNextSong}
+          />
         </>
       )}
       <div className={styles.controlContainer}>
@@ -143,7 +153,7 @@ function Rightsidebar() {
               console.log("Play/Pause button clicked");
             }}
           >
-            {isLoading ? "Loading..." : isPlaying ? <FaPause /> : <FaPlay />}
+            {isLoading ? "loading" : isPlaying ? <FaPause /> : <FaPlay />}
           </div>
           <FaChevronRight
             onClick={() => {
