@@ -5,3 +5,15 @@
     gap: 20px;
     color: white;
 }
+
+@media only screen and (max-width: 1130px) {
+    .container h1 {
+        font-size: 25px;
+    }
+}
+
+@media only screen and (max-width: 890px) {
+    .container h1 {
+        font-size: 15px;
+    }
+}

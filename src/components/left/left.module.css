@@ -24,3 +24,16 @@
     color: white;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 1130px) {
+    .sitelogo {
+        width: 50px;
+    }
+}
+
+@media only screen and (max-width: 890px) {
+    .container img {
+        width: 120px;
+        height: 40px;
+    }
+}

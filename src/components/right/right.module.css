@@ -6,16 +6,17 @@
     gap: 20px;
     align-items: flex-start;
     justify-content: center;
-    width: 82%;
+    width: 100%;
+    /* position: relative; */
 }
 
 .controlContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* justify-content: center; */
-    width: 100%;
+    width: 80%;
     font-size: 20px;
+    
 }
 
 .centerPlaybtns {
@@ -56,3 +57,44 @@
     display: none;
   }
   
+
+  @media only screen and (max-width: 1130px) {
+    .container {
+      width: 80%;
+    }
+
+    .container h1 {
+        font-size: 22px;
+    }
+    .imgfile {
+        width: 300px;
+        height: 300px;
+    }
+
+    .controlContainer {
+        width: 119%;
+    }
+  }
+
+  @media only screen and (max-width: 890px) {
+    .container h1 {
+        font-size: 15px;
+    }
+    .imgfile {
+        width: 200px;
+        height: 200px;
+    }
+
+    .controlContainer {
+        width: 119%;
+    }
+
+    .playbtn {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .greyBtn {
+        font-size: 10px;
+    }
+  }

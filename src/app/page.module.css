@@ -21,3 +21,9 @@
   color: white;
   width: 40%;
 }
+
+@media only screen and (max-width: 1130px) {
+  .container {
+    /* flex-direction: column; */
+  }
+}

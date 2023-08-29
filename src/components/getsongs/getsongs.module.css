@@ -33,3 +33,49 @@
 .imgbox {
     border-radius: 50px;
 }
+
+@media only screen and (max-width: 890px) {
+    .mainbox {
+        padding: 12px;
+    }
+
+    .imgbox img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .albuminfo h3 {
+        font-size: 15px;
+    }
+
+    .albuminfo p {
+        font-size: 13px;
+    }
+
+    .duration {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .mainbox {
+        padding: 10px;
+    }
+
+    .imgbox img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .albuminfo h3 {
+        font-size: 12px;
+    }
+
+    .albuminfo p {
+        font-size: 10px;
+    }
+
+    .duration {
+        font-size: 10px;
+    }
+}

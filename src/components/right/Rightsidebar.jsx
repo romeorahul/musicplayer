@@ -126,6 +126,7 @@ function Rightsidebar() {
             alt="photo"
             width={400}
             height={400}
+            className={styles.imgfile}
           />
 
           <audio

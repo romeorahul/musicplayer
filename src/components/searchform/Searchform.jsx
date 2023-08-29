@@ -1,50 +1,91 @@
-"use client";
-import React, { useState } from "react"; // Import useState
-import { useRouter } from "next/navigation"; // Correctly import next/router
+import React, { useState, useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
 import styles from "./search.module.css";
 import { IoMdSearch } from "react-icons/io";
+import { useMyContext } from "../context/MyContext";
+
+function SearchResultDropdown({ searchResults }) {
+  if (searchResults.length === 0) {
+    return <p>Search your song</p>;
+  }
+  return (
+    <div className={styles.dropdownContainer}>
+      <ul className={styles.dropdown}>
+        {searchResults.map((result) => (
+          <li key={result.id}>{result.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function SearchForm() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const router = useRouter();
+  const [searching, setSearching] = useState(false);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const { selectedItem } = useMyContext();
 
-    try {
-      const response = await fetch(
-        `/api/search?q=${encodeURIComponent(query)}`
-      );
-      const data = await response.json();
-      setSearchResults(data); // Assuming the API returns an array of results
-    } catch (error) {
-      console.error("Error fetching search results:", error);
+  const GET_SONGS = gql`
+    query GetSongs($songType: String!) {
+      getSongs(songType: $songType) {
+        id
+        title
+        artist
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(GET_SONGS, {
+    variables: { songType: selectedItem }, // Make sure selectedItem is of the correct type
+    skip: query.length < 3, // Skip the query if the search query is less than 3 characters
+  });
+
+  useEffect(() => {
+    if (data && data.getSongs) {
+      setSearchResults(data.getSongs);
     }
 
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    if (error) {
+      console.error("GraphQL Error:", error);
+    }
+
+    setSearching(false);
+  }, [data, error]);
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setQuery(inputValue);
+
+    if (inputValue.length >= 3) {
+      setSearching(true);
+    } else {
+      setSearching(false);
+      setSearchResults([]);
+    }
   };
 
   return (
-    <form onSubmit={handleSearch} className={styles.formContainer}>
-      <input
-        type="text"
-        placeholder="Search Songs / Artists"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button type="submit">
-        <IoMdSearch className={styles.searchIcon} />
-      </button>
+    <div className={styles.searchContainer}>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className={styles.formContainer}
+      >
+        <input
+          type="text"
+          placeholder="Search Songs / Artists"
+          value={query}
+          onChange={handleInputChange}
+        />
+        <button type="submit">
+          <IoMdSearch className={styles.searchIcon} />
+        </button>
+      </form>
 
-      {searchResults.length > 0 && (
-        <ul>
-          {searchResults.map((result) => (
-            <li key={result.id}>{result.title}</li>
-          ))}
-        </ul>
-      )}
-    </form>
+      {loading && searching && <p>Loading...</p>}
+
+      <SearchResultDropdown searchResults={searchResults} />
+    </div>
   );
 }
 
