@@ -20,6 +20,7 @@ function Rightsidebar() {
   const [songList, setSongList] = useState([]); // State to hold song list
   const [currentSongIndex, setCurrentSongIndex] = useState(0); // Initial song index
   const [isVolumeVisible, setIsVolumeVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Loading indicator state
   const audioRef = useRef(null);
 
   const query = gql`
@@ -45,11 +46,6 @@ function Rightsidebar() {
     }
   }, [data, loading, error, selectedItem]);
 
-  useEffect(() => {
-    // If song list or selected item changes, reset the current song index
-    setCurrentSongIndex(0);
-  }, [songList, selectedItem]);
-
   const changeSong = (newIndex) => {
     // Pause the current song
     audioRef.current.pause();
@@ -57,10 +53,18 @@ function Rightsidebar() {
     // Set the new current song index
     setCurrentSongIndex(newIndex);
 
-    // Play the new song if it was paused
-    if (isPlaying) {
+    // Load the new song
+    const newSong = songList[newIndex];
+    audioRef.current.src = `https://song-tc.pixelotech.com${newSong.audioUrl}`;
+
+    // Show loading indicator
+    setIsLoading(true);
+
+    // Listen for canplaythrough event before playing
+    audioRef.current.addEventListener("canplaythrough", () => {
       audioRef.current.play();
-    }
+      setIsLoading(false); // Hide loading indicator
+    });
   };
 
   const playNextSong = () => {
@@ -126,11 +130,27 @@ function Rightsidebar() {
           <FiMoreHorizontal />
         </div>
         <div className={styles.centerPlaybtns}>
-          <FaChevronLeft onClick={playPreviousSong} />
-          <div className={styles.playbtn} onClick={togglePlayPause}>
-            {isPlaying ? <FaPause /> : <FaPlay />}
+          <FaChevronLeft
+            onClick={() => {
+              playPreviousSong();
+              console.log("Previous button clicked");
+            }}
+          />
+          <div
+            className={styles.playbtn}
+            onClick={() => {
+              togglePlayPause();
+              console.log("Play/Pause button clicked");
+            }}
+          >
+            {isLoading ? "Loading..." : isPlaying ? <FaPause /> : <FaPlay />}
           </div>
-          <FaChevronRight onClick={playNextSong} />
+          <FaChevronRight
+            onClick={() => {
+              playNextSong();
+              console.log("Next button clicked");
+            }}
+          />
         </div>
         <div className={styles.greyBtn} onClick={toggleVolumeVisibility}>
           <FaVolumeUp />
