@@ -25,6 +25,7 @@ function Leftsidebar() {
   return (
     <div className={styles.container}>
       <img src={spotify} width={200} alt="logo" className={styles.sitelogo}/>
+      {/* <Image src={spotify} width={200} alt="logo" className={styles.sitelogo}/> */}
       <ul>
         <ListItem text="Favourites" onItemClick={handleListItemClick} />
         <ListItem text="For You" onItemClick={handleListItemClick} />

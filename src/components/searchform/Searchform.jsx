@@ -37,8 +37,8 @@ function SearchForm() {
   `;
 
   const { loading, error, data } = useQuery(GET_SONGS, {
-    variables: { songType: selectedItem }, // Make sure selectedItem is of the correct type
-    skip: query.length < 3, // Skip the query if the search query is less than 3 characters
+    variables: { songType: selectedItem },
+    skip: query.length < 3,
   });
 
   useEffect(() => {

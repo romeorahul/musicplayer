@@ -8,6 +8,7 @@
     gap: 30px;
     width: 80%;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .formContainer input {
@@ -75,4 +76,16 @@
         font-size: 8px;
         padding: 8px;
     }
+}
+
+@media only screen and (max-width: 531px) {
+    .formContainer {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .formContainer input {
+        font-size: 18px;
+    }
+    
 }

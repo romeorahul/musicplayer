@@ -1,5 +1,6 @@
 .container {
-  height: 1400px;
+  height: 1500px;
+  /* height: auto; */
   background: linear-gradient(to bottom, #000000, #151537);
  display: flex;
  justify-content: space-between;
@@ -26,4 +27,25 @@
   .container {
     /* flex-direction: column; */
   }
+}
+
+@media only screen and (max-width: 531px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left {
+  width: 100%;
+  }
+
+  .right {
+    width: 100%;
+  }
+
+  .middle {
+    color: white;
+    width: 100%;
+  }
+
 }
