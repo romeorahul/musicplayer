@@ -8,10 +8,10 @@ import Footer from "@/components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Spotify Music Player",
-  description: "Made By Rahul Singh",
-};
+// export const metadata = {
+//   title: "Spotify Music Player",
+//   description: "Made By Rahul Singh",
+// };
 
 export default function RootLayout({ children }) {
   return (

@@ -1,6 +1,3 @@
-
-
-
 const path = require("path");
 
 module.exports = {
@@ -10,6 +7,6 @@ module.exports = {
     return config;
   },
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ["images.unsplash.com"],
   },
 };
