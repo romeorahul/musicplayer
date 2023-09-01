@@ -32,7 +32,10 @@
 @media only screen and (max-width: 531px) {
   .container {
     flex-direction: column;
-    height: auto;
+    height: 100vh;
+    /* padding-bottom: 200px;
+     */
+     overflow-y: auto;
   }
 
   .left {
