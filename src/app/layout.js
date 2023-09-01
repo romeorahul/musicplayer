@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/utils/apolloClient";
 import { MyContextProvider } from "@/components/context/MyContext";
+import Footer from "@/components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ApolloProvider client={client}>
           <MyContextProvider>{children} </MyContextProvider>
+          <Footer />
         </ApolloProvider>
       </body>
     </html>
