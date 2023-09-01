@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./left.module.css";
 import Image from "next/image";
-import spotify from "public/spotifylogo.png";
+import spotify from "public/spotifyimg.png";
 import { useMyContext } from "../context/MyContext";
 
 const songTypeMapping = {
@@ -24,8 +24,7 @@ function Leftsidebar() {
 
   return (
     <div className={styles.container}>
-      <img src={spotify} width={200} alt="logo" className={styles.sitelogo}/>
-      {/* <Image src={spotify} width={200} alt="logo" className={styles.sitelogo}/> */}
+      <Image src={spotify} width={200} alt="logo" className={styles.sitelogo}/>
       <ul>
         <ListItem text="Favourites" onItemClick={handleListItemClick} />
         <ListItem text="For You" onItemClick={handleListItemClick} />

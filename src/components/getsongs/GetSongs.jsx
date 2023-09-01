@@ -29,6 +29,17 @@ const GetSongs = () => {
   if (error) return `Error ${error.message}`;
 
   // console.log("data is", data);
+  function formatDuration(duration) {
+    // Assuming duration is in seconds, you can format it as "mm:ss"
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    
+    // Use String formatting to ensure leading zeros for single-digit seconds
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+  
+    return `${formattedMinutes}:${formattedSeconds}`;
+  }
 
   return (
     <div>
@@ -56,7 +67,7 @@ const GetSongs = () => {
               <p>{song.artist}</p>
             </div>
           </div>
-          <div className={styles.duration}>{song.duration}</div>
+          <div className={styles.duration}>{formatDuration(song.duration)}</div>
         </div>
       ))}
     </div>

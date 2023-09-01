@@ -48,7 +48,7 @@
   font-size: 15px;
 }
 .volumebtn {
-    display: none;
+    display: block;
     top: 35px;
     left: 0px;
 }
